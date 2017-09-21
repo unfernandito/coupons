@@ -1,0 +1,27 @@
+language: ruby
+cache: bundler
+sudo: false
+
+rvm:
+  - '2.1'
+  - '2.2'
+
+addons:
+  postgresql: '9.4'
+
+before_script:
+  - psql -c 'create database coupons_test;' -U postgres
+  - mysql -e 'create database coupons_test;' -u root
+
+env:
+  - 'DATABASE_URL=postgres://postgres@localhost/coupons_test'
+  - 'DATABASE_URL=mysql2://root@localhost/coupons_test'
+
+gemfile:
+  - Gemfile
+  - gemfiles/rails_4_2.gemfile
+
+addons:
+  code_climate:
+    repo_token:
+      secure: 'iD2QMCQ9RHeaThxeRxkPeTMgLjOZhTXaaBnhFUMMe2CTbmqfWSld/+GPOYECr9VEEjPOyN8lkfTJ1benxa0Wog6xk7DC7aCXjgftpA95OmsJd+9czGv/2pp0D4m6xWGkKgB9IYM3IVhzLqqGeAjxInKgQOjVhKgkaaRYGUYTrFc='
