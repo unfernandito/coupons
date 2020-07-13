@@ -17,6 +17,8 @@ module Coupons
       end
 
       has_many :redemptions, class_name: 'Coupons::Models::CouponRedemption'
+      has_and_belongs_to_many :product_subtypes
+      has_and_belongs_to_many :performances
 
       validates_presence_of :code, :valid_from
       validates_inclusion_of :type, in: %w[percentage amount]
@@ -62,7 +64,7 @@ module Coupons
       end
 
       def has_available_redemptions?
-        redemptions_count.zero? || redemptions_count < redemption_limit
+        redemptions_count.zero? || redemptions_count < redemption_limit || redemption_limit == 0
       end
 
       def started?
